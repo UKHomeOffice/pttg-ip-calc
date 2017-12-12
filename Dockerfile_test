@@ -1,0 +1,26 @@
+FROM quay.io/ukhomeofficedigital/pttg-bdd-base
+
+ENV PTTG_API_ENDPOINT localhost
+ENV USER pttg
+ENV GROUP pttg
+ENV NAME pttg-ip-calc
+
+ARG VERSION
+
+WORKDIR /app
+
+RUN groupadd -r ${GROUP} && \
+    useradd -r -g ${GROUP} ${USER} -d /app && \
+    mkdir -p /app && \
+    chown -R ${USER}:${GROUP} /app
+
+COPY . /app
+
+RUN npm --loglevel warn install && \
+    npm --loglevel warn run postinstall  && \
+    chown -R ${USER}:${GROUP} /app  && \
+    chmod a+x /app/run-test.sh
+
+USER pttg
+
+ENTRYPOINT /app/run-test.sh

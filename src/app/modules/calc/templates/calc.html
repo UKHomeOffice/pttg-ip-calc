@@ -1,0 +1,80 @@
+<h1>Threshold: £{{ threshold }}</h1>
+<div>
+  <label>Dependants: <input type="number" ng-model="controls.dependants" ng-change="dependantsChanged()" /></label>
+</div>
+
+<table>
+  
+  <tr ng-repeat="row in summaryTable">
+    <td class="category" ng-class="{'category--ok': row.result}">{{ row.category }}</td>
+    <td colspan="5">{{ row.label }}</td>
+  </tr>
+
+  <tr class="blankrow"><td colspan="6">&nbsp;</td></tr>
+
+  <tr>
+    <td colspan="2"><label>Day: <input type="number" ng-model="controls.date" ng-change="controlsChanged()" /></label></td>
+    <td colspan="2"><label>Amount: <input type="number" ng-model="controls.amount" ng-change="controlsChanged()" /></label></td>
+    <td colspan="2">
+      <label>Employer: 
+        <select ng-model="controls.employer" ng-change="controlsChanged()">
+          <option ng-repeat="option in employers" ng-value="option">{{ option }}</option>
+        </select>
+      </label>
+    </td>
+  </tr>
+
+  <tr class="blankrow"><td colspan="6">&nbsp;</td></tr>
+
+  <tr>
+    <th colspan="3"><a ng-click="selectAll('applicants', true)">All</a>/<a ng-click="selectAll('applicants', false)">None</a> Applicant</a></th>
+    <th colspan="3"><a ng-click="selectAll('partners', true)">All</a>/<a ng-click="selectAll('partners', false)">None</a> Partner</a></th>
+  <tr>
+    
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Employer</th>
+    
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Employer</th>
+  </tr>
+  
+  <tr ng-repeat="(i, d) in days" class="day--{{i}}">
+    <td ng-class="{ selected: d.applicant.selected }">
+      <a ng-click="clicked(d.applicant, $event)">{{ d.applicant.date | ymd }}</a>
+    </td>
+    <td ng-class="{ selected: d.applicant.selected }">
+      <a ng-click="clicked(d.applicant, $event)">{{ d.applicant.amount }}</a>
+    </td>
+    <td ng-class="{ selected: d.applicant.selected }">
+      <a ng-click="clicked(d.applicant, $event)">{{ d.applicant.employer }}</a>
+    </td>
+    <td ng-class="{ selected: d.partner.selected }">
+      <a ng-click="clicked(d.partner, $event)">{{ d.partner.date | ymd }}</a>
+    </td>
+    <td ng-class="{ selected: d.partner.selected }">
+      <a ng-click="clicked(d.partner, $event)">{{ d.partner.amount }}</a>
+    </td>
+    <td ng-class="{ selected: d.partner.selected }">
+      <a ng-click="clicked(d.partner, $event)">{{ d.partner.employer }}</a>
+    </td>
+  </tr>
+  <tr class="blankrow"><td colspan="6">&nbsp;</td></tr>
+  <tr>
+    <td>1 - 6 mon</td>
+    <td>{{ summary.applicant.recent.amount }}</td>
+    <td>{{ summary.applicant.recent.employers.length }}</td>
+    <td></td>
+    <td>{{ summary.partner.recent.amount }}</td>
+    <td>{{ summary.partner.recent.employers.length }}</td>
+  </tr>
+  <tr>
+    <td>7 - 12 mon</td>
+    <td>{{ summary.applicant.later.amount }}</td>
+    <td>{{ summary.applicant.later.employers.length }}</td>
+    <td></td>
+    <td>{{ summary.partner.later.amount }}</td>
+    <td>{{ summary.partner.later.employers.length }}</td>
+  </tr>
+</table>

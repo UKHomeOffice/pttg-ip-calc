@@ -1,0 +1,36 @@
+.timeline__entry {
+  text-align: center;
+}
+
+.timeline__entry--in,
+.timeline__entry--gap {
+  width: 40px;
+  margin: 10px auto;
+  background-color: $green;
+  padding: 20px 4px;
+  border-radius: 4px;
+  color: #fff;
+  line-height: 1;
+}
+
+.timeline__entry--gap {
+  margin: 20px auto;
+  background-color: $red;
+}
+
+.timeline__entry--year {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-width: 1px 0 0 0;
+  border-color: #ccc;
+  border-style: solid;
+}
+
+.timeline__entry--yearlabel {
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+.timeline__entry--date {
+  font-size: 12px;
+}
