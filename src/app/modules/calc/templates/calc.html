@@ -5,7 +5,7 @@
 
 <table>
   
-  <tr ng-repeat="row in summaryTable">
+  <tr ng-repeat="row in summaryTable" ng-mouseover="focusOn(row.ref)" ng-mouseout="focusOn(null)" ng-class="{ reffocus: row.ref === focus, refblur: row.ref !== focus && focus}">
     <td class="category" ng-class="{'category--ok': row.result}">{{ row.category }}</td>
     <td colspan="5">{{ row.label }}</td>
   </tr>
@@ -13,11 +13,11 @@
   <tr class="blankrow"><td colspan="6">&nbsp;</td></tr>
 
   <tr>
-    <td colspan="2"><label>Day: <input type="number" ng-model="controls.date" ng-change="controlsChanged()" /></label></td>
-    <td colspan="2"><label>Amount: <input type="number" ng-model="controls.amount" ng-change="controlsChanged()" /></label></td>
+    <td colspan="2"><label>Day: <input type="number" ng-model="controls.date" ng-change="controlsChanged('day')" /></label></td>
+    <td colspan="2"><label>Amount: <input type="number" ng-model="controls.amount" ng-change="controlsChanged('amount')" /></label></td>
     <td colspan="2">
       <label>Employer: 
-        <select ng-model="controls.employer" ng-change="controlsChanged()">
+        <select ng-model="controls.employer" ng-change="controlsChanged('employer')">
           <option ng-repeat="option in employers" ng-value="option">{{ option }}</option>
         </select>
       </label>
@@ -40,23 +40,23 @@
     <th>Employer</th>
   </tr>
   
-  <tr ng-repeat="(i, d) in days" class="day--{{i}}">
-    <td ng-class="{ selected: d.applicant.selected }">
+  <tr ng-repeat="(i, d) in days" class="day--{{i}} focus--{{ focus }}">
+    <td ng-class="{ selected: d.applicant.selected }" class="applicant applicant--{{ d.applicant.cat }}">
       <a ng-click="clicked(d.applicant, $event)">{{ d.applicant.date | ymd }}</a>
     </td>
-    <td ng-class="{ selected: d.applicant.selected }">
+    <td ng-class="{ selected: d.applicant.selected }" class="applicant applicant--{{ d.applicant.cat }}">
       <a ng-click="clicked(d.applicant, $event)">{{ d.applicant.amount }}</a>
     </td>
-    <td ng-class="{ selected: d.applicant.selected }">
+    <td ng-class="{ selected: d.applicant.selected }" class="applicant applicant--{{ d.applicant.cat }}">
       <a ng-click="clicked(d.applicant, $event)">{{ d.applicant.employer }}</a>
     </td>
-    <td ng-class="{ selected: d.partner.selected }">
+    <td ng-class="{ selected: d.partner.selected }" class="partner partner--{{ d.partner.cat }}">
       <a ng-click="clicked(d.partner, $event)">{{ d.partner.date | ymd }}</a>
     </td>
-    <td ng-class="{ selected: d.partner.selected }">
+    <td ng-class="{ selected: d.partner.selected }" class="partner partner--{{ d.partner.cat }}">
       <a ng-click="clicked(d.partner, $event)">{{ d.partner.amount }}</a>
     </td>
-    <td ng-class="{ selected: d.partner.selected }">
+    <td ng-class="{ selected: d.partner.selected }" class="partner partner--{{ d.partner.cat }}">
       <a ng-click="clicked(d.partner, $event)">{{ d.partner.employer }}</a>
     </td>
   </tr>

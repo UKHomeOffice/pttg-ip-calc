@@ -75,44 +75,64 @@ calcModule.controller('CalcCtrl', ['$scope', '$state', '$document', 'CalcService
   }
 
   $scope.updateSummary = function () {
+    $scope.focus = null
     $scope.summary = CalcService.getSummary($scope.days)
     $scope.summaryTable = []
     $scope.summaryTable.push({
       category: 'A',
+      ref: 'a',
       label: 'Applicant\'s income in first 6 months meets or exceeds the threshold with single employer',
       result: (CalcService.categoryASolo($scope.summary, $scope.controls.dependants))
     })
 
+    $scope.focusOn = function (what) {
+      $scope.focus = what
+      $scope.$applyAsync()
+    }
+
     $scope.summaryTable.push({
       category: 'A',
+      ref: 'ac',
       label: 'Combined income in first 6 months meets or exceeds the threshold with single employer each',
       result: (CalcService.categoryACombined($scope.summary, $scope.controls.dependants))
     })
 
     $scope.summaryTable.push({
       category: 'B',
-      label: 'Applicant\'s income in first 6 & 12 month periods meets or exceeds the threshold with multiple employers',
+      ref: 'b',
+      label: 'Applicant\'s income in 12 month period meets or exceeds the threshold with multiple employers',
       result: (CalcService.categoryBSolo($scope.summary, $scope.controls.dependants))
     })
 
     $scope.summaryTable.push({
       category: 'B',
-      label: 'Combined income in first 6 & 12 month periods meets or exceeds the threshold with multiple employers',
+      ref: 'bc',
+      label: 'Combined income in 12 month period meets or exceeds the threshold with multiple employers',
       result: (CalcService.categoryBCombined($scope.summary, $scope.controls.dependants))
     })
   }
 
-  $scope.controlsChanged = function () {
+  $scope.controlsChanged = function (what) {
     var selected = CalcService.findSelected($scope.days)
 
     _.each(selected, function (s) {
-      var endOfMonth = s.date.clone().endOf('month').date()
-      var d = Number($scope.controls.date)
-      if (d >= 1) {
-        s.date.date(Math.min(d, endOfMonth))
+      switch (what) {
+        case 'day':
+          var endOfMonth = s.date.clone().endOf('month').date()
+          var d = Number($scope.controls.date)
+          if (d >= 1) {
+            s.date.date(Math.min(d, endOfMonth))
+          }
+          break
+
+        case 'amount':
+          s.amount = Number($scope.controls.amount)
+          break
+
+        case 'employer':
+          s.employer = $scope.controls.employer
+          break
       }
-      s.amount = Number($scope.controls.amount)
-      s.employer = $scope.controls.employer
     })
 
     $scope.updateSummary()

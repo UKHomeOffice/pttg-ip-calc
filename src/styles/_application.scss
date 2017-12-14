@@ -83,6 +83,7 @@ td {
     width: 100px;
     display: inline-block;
   }
+  transition: color 0.5s ease;
 }
 
 a.active {
@@ -164,110 +165,39 @@ a.active {
   }
 }
 
-.days__day--paid {
-  background-color: $green;
+.refblur {
+  color: #ccc;
 }
 
-.plusMinusPair {
-  width: 15px;
-  height: 30px;
-  display: block;
-  position: relative;
-
-  background-color: #eee;
-  border-color: #ccc;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 12px;
+.focus--a {
+  color: #ccc;
+  .applicant--A {
+    color: #000;
+  }
 }
 
-.plusMinusPair__up {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border-color: #ccc;
-  border-width: 0 0 1px 0;
-  border-style: solid;
-  box-sizing: border-box;
+.focus--ac {
+  color: #ccc;
+  .applicant--A,
+  .partner--A {
+    color: #000;
+  }
 }
 
-.plusMinusPair__down {
-  position: absolute;
-  top: 15px;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border-color: #999;
-  border-width: 1px 0 0 0;
-  border-style: solid;
-  box-sizing: border-box;
+.focus--b {
+  color: #ccc;
+  .applicant--A,
+  .applicant--B {
+    color: #000;
+  }
 }
 
-.arrow {
-  display: inline-block;
-  content: ' ';
-  box-sizing: border-box;
-  width: 10px;
-  height: 5px;
-  border-bottom: none;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid black;
-}
-.arrow--up {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid black;
-  border-top: none;
-}
-
-
-.summary {
-  position: fixed;
-  width: 500px;
-  top: 0;
-  left: 200px;
-}
-
-.paymentshifter {
-  position: fixed;
-  text-align: center;
-  width: 95px;
-  top: 55px;
-  left: 100px; 
-}
-
-.summary__year--ok {
-  background-color: $green;
-}
-
-.bdd {
-  margin-top: 20px;
-  font-family: courier;
-  font-size: 12px;
-}
-
-
-p.sequence {
-  height: 20px;
-  overflow: hidden;
-}
-
-span.sequence {
-  display: inline-block;
-  padding: 0 4px;
-  border-width: 0 0 2px 0;
-  border-style: solid;
-  border-color: #999;
-  color: #999;
-}
-span.sequence--paid {
-  color: $green;
-  border-width: 2px 2px 0 2px;
-  border-style: solid;
-  border-color: $green;
+.focus--bc {
+  color: #ccc;
+  .applicant--A,
+  .applicant--B,
+  .partner--A,
+  .partner--B {
+    color: #000;
+  }
 }

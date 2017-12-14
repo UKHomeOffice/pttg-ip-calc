@@ -28,11 +28,13 @@ calcModule.factory('CalcService', ['IOService', function (IOService) {
       var m = endDate.clone().subtract(i, 'month').startOf('month')
       days.push({
         applicant: {
+          cat: (i <= 5) ? 'A' : (i <= 11) ? 'B' : '',
           employer: 'Apple',
           amount: 1550,
           date: m.clone()
         },
         partner: {
+          cat: (i <= 5) ? 'A' : (i <= 11) ? 'B' : '',
           employer: 'Apple',
           amount: 1550,
           date: m.clone()
@@ -129,21 +131,21 @@ calcModule.factory('CalcService', ['IOService', function (IOService) {
 
   this.categoryBSolo = function (summary, nDependants) {
     var t = me.getThreshold(nDependants)
-    var thresholdMet1 = (summary.applicant.recent.amount >= (t / 2))
+    // var thresholdMet1 = (summary.applicant.recent.amount >= (t / 2))
     var thresholdMet2 = (summary.applicant.recent.amount + summary.applicant.later.amount >= t)
-    return thresholdMet1 && thresholdMet2
+    return thresholdMet2
   }
 
   this.categoryBCombined = function (summary, nDependants) {
     var t = me.getThreshold(nDependants)
-    var thresholdMet1 = (summary.applicant.recent.amount + summary.partner.recent.amount >= (t / 2))
+    // var thresholdMet1 = (summary.applicant.recent.amount + summary.partner.recent.amount >= (t / 2))
     var thresholdMet2 = (
       summary.applicant.recent.amount +
       summary.applicant.later.amount +
       summary.partner.recent.amount +
       summary.partner.later.amount >=
       t)
-    return thresholdMet1 && thresholdMet2
+    return thresholdMet2
   }
 
   return this
