@@ -107,8 +107,10 @@ calcModule.factory('CalcService', ['IOService', function (IOService) {
       }
     })
 
+    summary.applicant.first = months[0].applicant.amount
     summary.applicant.recent.employers = _.uniq(summary.applicant.recent.employers)
     summary.applicant.later.employers = _.uniq(summary.applicant.later.employers)
+    summary.partner.first = months[0].partner.amount
     summary.partner.recent.employers = _.uniq(summary.partner.recent.employers)
     summary.partner.later.employers = _.uniq(summary.partner.later.employers)
 
@@ -117,35 +119,37 @@ calcModule.factory('CalcService', ['IOService', function (IOService) {
 
   this.categoryASolo = function (summary, nDependants) {
     var t = me.getThreshold(nDependants)
+    var firstPayment = (summary.applicant.first >= (t / 12))
     var thresholdMet = (summary.applicant.recent.amount >= (t / 2))
     var singleEmployer = (summary.applicant.recent.employers.length === 1)
-    return thresholdMet && singleEmployer
+    return thresholdMet && singleEmployer && firstPayment
   }
 
   this.categoryACombined = function (summary, nDependants) {
     var t = me.getThreshold(nDependants)
+    var firstPayment = ((summary.applicant.first + summary.partner.first) >= (t / 12))
     var thresholdMet = (summary.applicant.recent.amount + summary.partner.recent.amount >= (t / 2))
     var singleEmployer = (summary.applicant.recent.employers.length === 1 && summary.partner.recent.employers.length === 1)
-    return thresholdMet && singleEmployer
+    return thresholdMet && singleEmployer && firstPayment
   }
 
   this.categoryBSolo = function (summary, nDependants) {
     var t = me.getThreshold(nDependants)
-    // var thresholdMet1 = (summary.applicant.recent.amount >= (t / 2))
+    var firstPayment = (summary.applicant.first >= (t / 12))
     var thresholdMet2 = (summary.applicant.recent.amount + summary.applicant.later.amount >= t)
-    return thresholdMet2
+    return thresholdMet2 && firstPayment
   }
 
   this.categoryBCombined = function (summary, nDependants) {
     var t = me.getThreshold(nDependants)
-    // var thresholdMet1 = (summary.applicant.recent.amount + summary.partner.recent.amount >= (t / 2))
+    var firstPayment = ((summary.applicant.first + summary.partner.first) >= (t / 12))
     var thresholdMet2 = (
       summary.applicant.recent.amount +
       summary.applicant.later.amount +
       summary.partner.recent.amount +
       summary.partner.later.amount >=
       t)
-    return thresholdMet2
+    return thresholdMet2 && firstPayment
   }
 
   return this
